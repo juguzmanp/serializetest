@@ -4,6 +4,7 @@
  */
 package serializacion.y.sockets.test;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -54,8 +55,15 @@ public class SerializacionYSocketsTest {
             e.printStackTrace();
         }
         try{
-            server = new ServerSocket(9999);
+            ServerSocket server = new ServerSocket(9999);
             Socket socket = server.accept();
+            DataInputStream streamIn = new DataInputStream(socket.getInputStream());
+            String recibido = streamIn.readUTF();
+            streamIn.close();
+            server.close();
+            socket.close();
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
     
